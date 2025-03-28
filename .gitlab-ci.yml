@@ -5,8 +5,8 @@ workflow:
     - when: always
 
 variables:
-  DEPLOYMENT_SERVER_HOST: "13.37.235.23"
-  APP_ENDPOINT: http://ec2-13-37-235-23.eu-west-3.compute.amazonaws.com:3000
+  DEPLOYMENT_SERVER_HOST: "185.132.178.167"
+  APP_ENDPOINT: http://185.132.178.167:3000
 
 stages:
   - build
