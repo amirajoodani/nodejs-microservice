@@ -14,10 +14,6 @@ stages:
 
 .build:
   stage: build
-  tags:
-    - ec2
-    - remote
-    - shell
   variables:
     MICRO_SERVICE: ""
     SERVICE_VERSION: ""
@@ -61,10 +57,6 @@ build_shopping_cart:
 
 .deploy:
   stage: deploy
-  tags:
-    - ec2
-    - remote
-    - shell
   variables: 
     MICRO_SERVICE: ""
     SERVICE_VERSION: ""
@@ -74,8 +66,6 @@ build_shopping_cart:
     - export IMAGE_NAME=$CI_REGISTRY_IMAGE/microservice/$MICRO_SERVICE
     - export IMAGE_TAG=$SERVICE_VERSION
   script:
-    - scp -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ./docker-compose.yaml ubuntu@$DEPLOYMENT_SERVER_HOST:/home/ubuntu
-    - ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$DEPLOYMENT_SERVER_HOST "
       docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY &&
 
       export COMPOSE_PROJECT_NAME=$MICRO_SERVICE &&
