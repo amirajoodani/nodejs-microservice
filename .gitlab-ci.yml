@@ -22,6 +22,7 @@ stages:
     SERVICE_VERSION: ""
   before_script:
     - cd $MICRO_SERVICE
+    - export IMAGE_NAME=${CI_REGISTRY_IMAGE}/microservice/${MICRO_SERVICE}
     - export IMAGE_TAG=$SERVICE_VERSION
     - docker login  -u $HARBOR_USER -p $HARBOR_PASSWORD $HARBOR_REGISTRY 
   script:
