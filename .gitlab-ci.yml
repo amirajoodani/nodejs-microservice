@@ -23,11 +23,11 @@ stages:
   before_script:
     - cd $MICRO_SERVICE
     - export IMAGE_TAG=$SERVICE_VERSION
-    - docker login -u $HARBOR_USER -p $HARBOR_PASSWORD $HARBOR_REGISTRY
+    - docker login --insecure-registry -u $HARBOR_USER -p $HARBOR_PASSWORD $HARBOR_REGISTRY
   script:
     - docker build -t $IMAGE_NAME:$IMAGE_TAG .
     - docker tag $IMAGE_NAME:$IMAGE_TAG $HARBOR_REGISTRY/microservice/$MICRO_SERVICE:$IMAGE_TAG
-    - docker push $HARBOR_REGISTRY/microservice/$MICRO_SERVICE:$IMAGE_TAG
+    - docker push --insecure-registry $HARBOR_REGISTRY/microservice/$MICRO_SERVICE:$IMAGE_TAG
 
 build_frontend:
   extends: .build
