@@ -8,6 +8,7 @@ variables:
   DEPLOYMENT_SERVER_HOST: "185.132.178.167"
   APP_ENDPOINT: http://185.132.178.167:3000
   HARBOR_REGISTRY: "http://harbor.nextdevops.ir/gitlab"
+  DOCKER_OPTS: "--insecure-registry harbor.nextdevops.ir"
   HARBOR_USER: "admin"  # یا از متغیر CI استفاده کنید
   HARBOR_PASSWORD: "aA@@135792468"  # بهتر است از متغیرهای مخفی GitLab استفاده کنید
 
@@ -23,11 +24,11 @@ stages:
   before_script:
     - cd $MICRO_SERVICE
     - export IMAGE_TAG=$SERVICE_VERSION
-    - docker login --insecure-registry -u $HARBOR_USER -p $HARBOR_PASSWORD $HARBOR_REGISTRY
+    - docker login  -u $HARBOR_USER -p $HARBOR_PASSWORD $HARBOR_REGISTRY
   script:
     - docker build -t $IMAGE_NAME:$IMAGE_TAG .
     - docker tag $IMAGE_NAME:$IMAGE_TAG $HARBOR_REGISTRY/microservice/$MICRO_SERVICE:$IMAGE_TAG
-    - docker push --insecure-registry $HARBOR_REGISTRY/microservice/$MICRO_SERVICE:$IMAGE_TAG
+    - docker push  $HARBOR_REGISTRY/microservice/$MICRO_SERVICE:$IMAGE_TAG
 
 build_frontend:
   extends: .build
