@@ -27,3 +27,10 @@ Microservices project made up of 1 frontend service and 2 backend services: prod
     export DC_APP_PORT=port (3000)
 
     docker-compose -d up
+
+
+## Output :<br>
+![nodejsmicroservice](https://github.com/user-attachments/assets/769127fd-5eef-481d-b2b4-5dbfdd84a988) <br>
+
+![nodejsmicroservice1](https://github.com/user-attachments/assets/f6567c77-8fe9-449c-84e3-4b9320e4259b)
+
