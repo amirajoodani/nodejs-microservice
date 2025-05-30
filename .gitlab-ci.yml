@@ -22,13 +22,13 @@ stages:
     SERVICE_VERSION: ""
   before_script:
     - cd $MICRO_SERVICE
-    - export IMAGE_NAME=${CI_REGISTRY_IMAGE}/microservice/${MICRO_SERVICE}
+    - export IMAGE_NAME=${CI_REGISTRY_IMAGE}/${MICRO_SERVICE}
     - export IMAGE_TAG=$SERVICE_VERSION
     - docker login  -u $HARBOR_USER -p $HARBOR_PASSWORD $HARBOR_REGISTRY 
   script:
     - docker build -t $IMAGE_NAME:$IMAGE_TAG .
-    - docker tag $IMAGE_NAME:$IMAGE_TAG $HARBOR_REGISTRY/microservice/$MICRO_SERVICE:$IMAGE_TAG
-    - docker push  $HARBOR_REGISTRY/microservice/$MICRO_SERVICE:$IMAGE_TAG 
+    - docker tag $IMAGE_NAME:$IMAGE_TAG $HARBOR_REGISTRY/$MICRO_SERVICE:$IMAGE_TAG
+    - docker push  $HARBOR_REGISTRY/$MICRO_SERVICE:$IMAGE_TAG 
 build_frontend:
   extends: .build
   variables:
@@ -64,7 +64,7 @@ build_shopping_cart:
     APP_PORT: ""
   before_script:
     - chmod 400 $SSH_PRIVATE_KEY
-    - export IMAGE_NAME=$CI_REGISTRY_IMAGE/microservice/$MICRO_SERVICE
+    - export IMAGE_NAME=$CI_REGISTRY_IMAGE/$MICRO_SERVICE
     - export IMAGE_TAG=$SERVICE_VERSION
   script:
     - |
