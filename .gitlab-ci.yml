@@ -7,6 +7,9 @@ workflow:
 variables:
   DEPLOYMENT_SERVER_HOST: "185.132.178.167"
   APP_ENDPOINT: http://185.132.178.167:3000
+  HARBOR_REGISTRY: "harbor.nextdevops.ir/gitlab"
+  HARBOR_USER: "admin"  # یا از متغیر CI استفاده کنید
+  HARBOR_PASSWORD: "aA@@135792468"  # بهتر است از متغیرهای مخفی GitLab استفاده کنید
 
 stages:
   - build
@@ -22,10 +25,12 @@ stages:
     - export IMAGE_NAME=$CI_REGISTRY_IMAGE/microservice/$MICRO_SERVICE
     - export IMAGE_TAG=$SERVICE_VERSION
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker login -u $HARBOR_USER -p $HARBOR_PASSWORD $HARBOR_REGISTRY
   script:
     - docker build -t $IMAGE_NAME:$IMAGE_TAG .
     - docker push $IMAGE_NAME:$IMAGE_TAG
-
+    - docker tag $IMAGE_NAME:$IMAGE_TAG $HARBOR_REGISTRY/microservice/$MICRO_SERVICE:$IMAGE_TAG
+    - docker push $HARBOR_REGISTRY/microservice/$MICRO_SERVICE:$IMAGE_TAG
 
 build_frontend:
   extends: .build
@@ -54,7 +59,6 @@ build_shopping_cart:
     changes:
       - "shopping-cart/**/*"
   
-
 .deploy:
   stage: deploy
   variables: 
@@ -66,7 +70,9 @@ build_shopping_cart:
     - export IMAGE_NAME=$CI_REGISTRY_IMAGE/microservice/$MICRO_SERVICE
     - export IMAGE_TAG=$SERVICE_VERSION
   script:
+    - |
       docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY &&
+      docker login -u $HARBOR_USER -p $HARBOR_PASSWORD $HARBOR_REGISTRY &&
 
       export COMPOSE_PROJECT_NAME=$MICRO_SERVICE &&
       export DC_IMAGE_NAME=$IMAGE_NAME &&
@@ -76,11 +82,10 @@ build_shopping_cart:
       docker network create micro_service || true &&
 
       docker-compose down &&
-      docker-compose up -d"
+      docker-compose up -d
   environment:
     name: development
     url: $APP_ENDPOINT
-
 
 deploy_frontend:
   extends: .deploy
