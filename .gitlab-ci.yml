@@ -63,7 +63,7 @@ build_shopping_cart:
     SERVICE_VERSION: ""
     APP_PORT: ""
   before_script:
-    - chmod 400 $SSH_PRIVATE_KEY
+#    - chmod 400 $SSH_PRIVATE_KEY
     - export IMAGE_NAME=$CI_REGISTRY_IMAGE/$MICRO_SERVICE
     - export IMAGE_TAG=$SERVICE_VERSION
   script:
