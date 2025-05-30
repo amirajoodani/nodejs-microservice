@@ -7,7 +7,7 @@ workflow:
 variables:
   DEPLOYMENT_SERVER_HOST: "185.132.178.167"
   APP_ENDPOINT: http://185.132.178.167:3000
-  HARBOR_REGISTRY: "http://harbor.nextdevops.ir/gitlab"
+  HARBOR_REGISTRY: "harbor.nextdevops.ir/gitlab"
   HARBOR_USER: "admin"  # یا از متغیر CI استفاده کنید
   HARBOR_PASSWORD: "aA@@135792468"  # بهتر است از متغیرهای مخفی GitLab استفاده کنید
 
