@@ -68,7 +68,6 @@ build_shopping_cart:
     - export IMAGE_TAG=$SERVICE_VERSION
   script:
     - |
-      docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY &&
       docker login -u $HARBOR_USER -p $HARBOR_PASSWORD $HARBOR_REGISTRY &&
 
       export COMPOSE_PROJECT_NAME=$MICRO_SERVICE &&
